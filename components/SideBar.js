@@ -5,16 +5,23 @@ import MoreVert from "@material-ui/icons/MoreVert";
 import Chat from "@material-ui/icons/Chat";
 import Search from "@material-ui/icons/Search";
 import * as EmailValidator from "email-validator";
-import { auth } from "../firebase";
+import { db, auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 
 const Sidebar = () => {
   const [user] = useAuthState(auth);
   const createChat = () => {
     const input = prompt("Enter Email");
     if (!input) return null;
-    if (EMailValidator.validate(input)) {
-      // add chat to db of chats
+    if (EmailValidator.validate(input) && input !== user.email) {
+      // at hr 1:33:20 check if input email already exists
+      const chatsRef = addDoc(collection(db, "chats"), {
+        user: [user.email, input],
+      });
+      alert("chat added");
+    } else {
+      alert("error");
     }
   };
   return (

@@ -10,26 +10,6 @@ function MyApp({ Component, pageProps }) {
   const [user, loading] = useAuthState(auth);
   useEffect(() => {
     if (user) {
-      // db.collection("users").doc(user.uid).set(
-      //   {
-      //     email: user.email,
-      //     lastSenn: firebase.firestore.Fieldvalue.serverTimestamp(),
-      //     photoURL: user.photoURL,
-      //   },
-      //   { merge: true }
-      // );
-      console.log(serverTimestamp());
-      // try {
-      //   const docRef = setDoc(collection(db, "users"), {
-      //     email: user.email,
-      //     lastSenn: serverTimestamp(),
-      //     photoURL: user.photoURL,
-      //   });
-      //   console.log("Document written with ID: ", docRef.id);
-      // } catch (e) {
-      //   console.error("Error adding document: ", e);
-      // }
-
       const usersRef = doc(db, "users", user.uid);
       setDoc(
         usersRef,
@@ -41,6 +21,27 @@ function MyApp({ Component, pageProps }) {
         { merge: true }
       );
     }
+    // db.collection("users").doc(user.uid).set(
+    //   {
+    //     email: user.email,
+    //     lastSenn: firebase.firestore.Fieldvalue.serverTimestamp(),
+    //     photoURL: user.photoURL,
+    //   },
+    //   { merge: true }
+    // );
+
+    // console.log(serverTimestamp());
+
+    // try {
+    //   const docRef = setDoc(collection(db, "users"), {
+    //     email: user.email,
+    //     lastSenn: serverTimestamp(),
+    //     photoURL: user.photoURL,
+    //   });
+    //   console.log("Document written with ID: ", docRef.id);
+    // } catch (e) {
+    //   console.error("Error adding document: ", e);
+    // }
   }, [user]);
 
   if (loading) return <Loading />;

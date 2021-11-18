@@ -5,8 +5,11 @@ import MoreVert from "@material-ui/icons/MoreVert";
 import Chat from "@material-ui/icons/Chat";
 import Search from "@material-ui/icons/Search";
 import * as EmailValidator from "email-validator";
+import { auth } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Sidebar = () => {
+  const [user] = useAuthState(auth);
   const createChat = () => {
     const input = prompt("Enter Email");
     if (!input) return null;
@@ -17,7 +20,10 @@ const Sidebar = () => {
   return (
     <Container>
       <Header>
-        <UserAvatar />
+        <UserAvatar
+          src={user.photoURL ? user.photoURL : null}
+          onClick={() => auth.signOut()}
+        />
         <IconContainer>
           <IconButton>
             <Chat />
